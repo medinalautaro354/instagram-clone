@@ -1,14 +1,31 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-const LoginForm = () => {
+const LoginForm = ({navigation}) => {
     return (
         <>
-            <Text>Desde Formulario de login</Text>
+            <View style={styles.container}>
+                <Text>¿No tienes una cuenta? </Text>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('SignUp')}
+                    
+                >
+                    <Text style={styles.text}>Registrate.</Text>
+                </TouchableOpacity>
+            </View>
         </>);
 }
 
 const styles = StyleSheet.create({
+    container:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    text:{
+        color: '#2196f2',
+        textDecorationLine: 'underline'
+    }
 });
 
 export default LoginForm;

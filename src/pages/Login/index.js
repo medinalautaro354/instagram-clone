@@ -13,7 +13,7 @@ const Login = ({navigation}) =>{
                 />
             </View>
             <View>
-                <LoginForm/>
+                <LoginForm navigation={navigation}/>
             </View>
         </View>
         )
