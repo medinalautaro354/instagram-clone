@@ -1,31 +1,121 @@
-import React from 'react';
-import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { Text, StyleSheet, TouchableOpacity, View, TextInput } from 'react-native';
 
-const LoginForm = ({navigation}) => {
+import { useForm } from 'react-hook-form';
+
+const LoginForm = ({ navigation }) => {
+
+    const onSubmit = data => {
+        trigger(['email', 'password']);
+        console.log("Form Data: ", data);
+    }
+
+    const { register, handleSubmit, setValue, errors, trigger } = useForm();
+
+    const passwordRef = useRef();
+
+    useEffect(() => {
+        register('email', { required: true, maxLength: 50, min: 4 });
+        register('password', { required: true, maxLength: 50, min: 4 });
+    }, [register]);
+
     return (
         <>
             <View style={styles.container}>
-                <Text>¿No tienes una cuenta? </Text>
+                <TextInput
+                    placeholder='Correo electrónico'
+                    onChangeText={text => {
+                        setValue('email', text)
+                        trigger('email');
+                    }}
+                    autoCompleteType="email"
+                    keyboardType="email-address"
+                    textContentType="emailAddress"
+                    style={styles.textInput}
+                    autoFocus={true}
+                    onSubmitEditing={() => {
+                        passwordRef.current.focus();
+                        trigger('email');
+                    }}
+                />
+                {errors.email?.type === 'required' && <Text style={styles.textError}>El email es necesario</Text>}
+
+                <TextInput
+                    placeholder='Contraseña'
+                    onChangeText={text => {
+                        setValue('password', text)
+                        trigger('password');
+                    }}
+                    secureTextEntry={true}
+                    style={styles.textInput}
+                    onSubmitEditing={() => {
+                        trigger('password');
+                    }}
+                    ref={(e) => {
+                        register(e)
+                        passwordRef.current = e
+                    }}
+                />
+                {errors.password?.type === 'required' && <Text style={styles.textError}>La contraseña es necesaria</Text>}
+                
+                <View style={styles.containerRecoveryPassword}>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('SignUp')}
-                    
                 >
-                    <Text style={styles.text}>Registrate.</Text>
+                    <Text style={styles.textRecoveryPassword}>¿Olvidaste tu contraseña?</Text>
                 </TouchableOpacity>
+                </View>
+                <View style={styles.btnContainer}>
+                    <TouchableOpacity
+                        onPress={handleSubmit(onSubmit)}
+                        style={styles.btn}>
+                        <View style={styles.btn}>
+                            <Text style={styles.textButton}>Iniciar sesión</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
         </>);
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
+    container: {
+        marginHorizontal: 20,
     },
-    text:{
-        color: '#2196f2',
-        textDecorationLine: 'underline'
-    }
+    textInput: {
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 5,
+        marginVertical: 5,
+        paddingVertical: 7,
+        backgroundColor: '#ebebeb'
+    },
+    containerRecoveryPassword:{
+        marginTop: 5,
+        justifyContent: 'center',
+        alignItems:'flex-end'
+    },
+    textRecoveryPassword:{
+        color: '#2196F3',
+        fontWeight: 'bold'
+    },
+    btnContainer: {
+        marginTop: 20
+    },
+    btn: {
+        borderRadius: 5,
+        alignItems: "center",
+        backgroundColor: '#2196F3',
+        padding: 8
+    },
+    textButton: {
+        color: '#fff',
+        fontSize: 15,
+        fontWeight: 'bold'
+    },
+    textError: {
+        color: '#ff2724'
+    },
 });
 
 export default LoginForm;

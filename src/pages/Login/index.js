@@ -1,38 +1,66 @@
 import React from 'react';
-import { Text, View, Button, StyleSheet, Image } from 'react-native';
+import { Text, View, Button, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 import LoginForm from '../../components/LoginForm';
 
-const Login = ({navigation}) =>{
-    return(
+const Login = ({ navigation }) => {
+    return (
         <View style={styles.container}>
-            <View style={styles.logoContainer}>
-                <Image
-                    style={styles.logo}
-                    source={require('../../assets/images/instagram-logo.png')}
-                />
-            </View>
-            <View>
-                <LoginForm navigation={navigation}/>
+            <ScrollView>
+
+                <View style={styles.logoContainer}>
+                    <Image
+                        style={styles.logo}
+                        source={require('../../assets/images/instagram-logo.png')}
+                    />
+                </View>
+                <View>
+                    <LoginForm navigation={navigation} />
+                </View>
+            </ScrollView>
+
+            <View style={styles.footerContainer}>
+                <Text style={styles.textFooter}>¿No tienes una cuenta? </Text>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('SignUp')}
+                >
+                    <Text style={styles.btn}>Registrate.</Text>
+                </TouchableOpacity>
             </View>
         </View>
-        )
+    )
 }
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#fff',
+        flex: 1,
+        backgroundColor: '#fff',
     },
-    logoContainer:{
+    logoContainer: {
         marginTop: 100,
         alignItems: 'center',
         justifyContent: 'center'
-    },  
-    logo:{
+    },
+    logo: {
         height: 100,
         width: '75%'
+    },
+    footerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 10,
+        borderTopWidth: 1,
+        borderColor: 'gray',
+        height: 40
+    },
+    textFooter:{
+      color: 'gray'  
+    },
+    btn: {
+        color: '#2196f2',
+        textDecorationLine: 'underline'
     }
-  });
+});
 
 export default Login;

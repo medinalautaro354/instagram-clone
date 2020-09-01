@@ -35,7 +35,6 @@ const SignUpForm = () => {
                 keyboardType="email-address"
                 textContentType="emailAddress"
                 style={styles.textInput}
-                autoFocus={true}
                 onSubmitEditing={() => {
                     passwordRef.current.focus();
                     trigger('email');
@@ -44,7 +43,10 @@ const SignUpForm = () => {
             {errors.email?.type === 'required' && <Text style={styles.textError}>El email es necesario</Text>}
             <TextInput
                 placeholder='Contraseña'
-                onChangeText={text => { setValue('password', text) }}
+                onChangeText={text => { 
+                    setValue('password', text)
+                    trigger('password');
+                }}
                 secureTextEntry={true}
                 style={styles.textInput}
                 onSubmitEditing={() => {
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: "center",
         backgroundColor: '#2196F3',
-        padding: 10
+        padding: 8
     },
     textButton: {
         color: '#fff',
