@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text, View, Button, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
+import Colors from '../../utils/colors';
+
 import LoginForm from '../../components/LoginForm';
 
 const Login = ({ navigation }) => {
@@ -34,7 +36,7 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: Colors.background,
     },
     logoContainer: {
         marginTop: 100,
@@ -51,14 +53,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginVertical: 10,
         borderTopWidth: 1,
-        borderColor: 'gray',
+        borderColor: Colors.borderColor,
         height: 40
     },
     textFooter:{
-      color: 'gray'  
+      color: Colors.borderColor
     },
     btn: {
-        color: '#2196f2',
+        color: Colors.buttonColor,
         textDecorationLine: 'underline'
     }
 });
