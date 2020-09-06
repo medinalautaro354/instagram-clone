@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, TextInput } from 'react-native';
 
+import Colors from '../../utils/colors';
+
 import { useForm } from 'react-hook-form';
 
 const LoginForm = ({ navigation }) => {
@@ -83,12 +85,12 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
     },
     textInput: {
-        borderColor: 'gray',
+        borderColor: Colors.borderColor,
         borderWidth: 1,
         borderRadius: 5,
         marginVertical: 5,
         paddingVertical: 7,
-        backgroundColor: '#ebebeb'
+        backgroundColor: Colors.backgroudInput
     },
     containerRecoveryPassword:{
         marginTop: 5,
@@ -96,7 +98,7 @@ const styles = StyleSheet.create({
         alignItems:'flex-end'
     },
     textRecoveryPassword:{
-        color: '#2196F3',
+        color: Colors.buttonColor,
         fontWeight: 'bold'
     },
     btnContainer: {
@@ -105,16 +107,16 @@ const styles = StyleSheet.create({
     btn: {
         borderRadius: 5,
         alignItems: "center",
-        backgroundColor: '#2196F3',
+        backgroundColor: Colors.buttonColor,
         padding: 8
     },
     textButton: {
-        color: '#fff',
+        color: Colors.background,
         fontSize: 15,
         fontWeight: 'bold'
     },
     textError: {
-        color: '#ff2724'
+        color: Colors.errorTextColor
     },
 });
 
