@@ -4,4 +4,5 @@ export default Colors = {
     buttonColor: '#2196F3',
     errorTextColor: '#ff2724',
     borderColor: 'gray',
+    black: '#000'
 }
