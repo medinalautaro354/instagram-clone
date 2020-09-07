@@ -1,15 +1,27 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Text, StyleSheet, TouchableOpacity, View, TextInput } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, View, TextInput, ActivityIndicator } from 'react-native';
+import {useDispatch} from 'react-redux';
+
+import { postLogin } from '../../redux/actions/authentication';
 
 import Colors from '../../utils/colors';
 
 import { useForm } from 'react-hook-form';
 
-const LoginForm = ({ navigation }) => {
+const LoginForm = ({ navigation, isLoading, setSendRequest }) => {
+
+    const dispatch = useDispatch();
 
     const onSubmit = data => {
         trigger(['email', 'password']);
-        console.log("Form Data: ", data);
+
+        let loginRequestDto = {
+            email: data.email,
+            password: data.password
+        }
+        dispatch(postLogin(loginRequestDto));
+
+        setSendRequest(true);
     }
 
     const { register, handleSubmit, setValue, errors, trigger } = useForm();
@@ -70,9 +82,11 @@ const LoginForm = ({ navigation }) => {
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
                         onPress={handleSubmit(onSubmit)}
-                        style={styles.btn}>
+                        style={styles.btn}
+                        >
                         <View style={styles.btn}>
-                            <Text style={styles.textButton}>Iniciar sesión</Text>
+                            {isLoading ? <ActivityIndicator size="small" color={Colors.background} /> : 
+                            <Text style={styles.textButton}>Iniciar sesión</Text>}
                         </View>
                     </TouchableOpacity>
                 </View>
