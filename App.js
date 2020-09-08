@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 import Login from './src/pages/Login';
 import SignUp from './src/pages/SignUp';
 import Home from './src/pages/Home';
+import HeaderHome from './src/components/HeaderHome';
 
 import store from './src/redux/store';
 
@@ -30,7 +31,15 @@ const App = () => {
             component={Login}
             options={{ headerShown: false }} />
           <Stack.Screen name="SignUp" component={SignUp} />
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              header: () => (
+                <HeaderHome />
+              )
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
