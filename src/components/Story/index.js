@@ -6,7 +6,7 @@ import { faHeart, faComment, faPaperPlane, faBookmark } from '@fortawesome/free-
 import IconButton from '../IconButton';
 const Story = ({image, username, likes, comentary}) => {
     return (
-        <View>
+        <View style={styles.container}>
             <View style={styles.containerHeader}>
                 <Image
                     style={styles.tinyLogo}
@@ -61,6 +61,9 @@ const Story = ({image, username, likes, comentary}) => {
 }
 
 const styles = StyleSheet.create({
+    container:{
+        marginVertical: 10
+    },  
     containerHeader: {
         flexDirection: 'row',
         alignItems: 'center'
