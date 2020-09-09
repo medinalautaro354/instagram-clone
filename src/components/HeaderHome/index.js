@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Image, View } from 'react-native';
 import IconButton from '../IconButton';
 
-import { faCamera, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
+import { faCamera} from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 
 const HeaderHome = () => {
     return (
