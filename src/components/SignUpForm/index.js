@@ -1,15 +1,27 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Text, View, KeyboardAvoidingView, TextInput, TouchableHighlight, StyleSheet } from 'react-native';
+import { Text, View, KeyboardAvoidingView, TextInput, TouchableHighlight, StyleSheet, ActivityIndicator } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { postSignUp } from '../../redux/actions/signup';
 
 import Colors from '../../utils/colors';
 
 import { useForm } from 'react-hook-form';
 
-const SignUpForm = () => {
+const SignUpForm = ({ isLoading, setSendRequest }) => {
+
+    const distpach = useDispatch();
 
     const onSubmit = data => {
-        trigger(['email','password','passwordConfirm']);
-        console.log("Form Data: ", data);
+        trigger(['email', 'password', 'passwordConfirm']);
+
+        let signUpDto = {
+            email: data.email,
+            password: data.password
+        }
+
+        distpach(postSignUp(signUpDto));
+        setSendRequest(true);
     }
 
     const passwordRef = useRef();
@@ -44,7 +56,7 @@ const SignUpForm = () => {
             {errors.email?.type === 'required' && <Text style={styles.textError}>El email es necesario</Text>}
             <TextInput
                 placeholder='Contraseña'
-                onChangeText={text => { 
+                onChangeText={text => {
                     setValue('password', text)
                     trigger('password');
                 }}
@@ -62,8 +74,8 @@ const SignUpForm = () => {
             {errors.password?.type === 'required' && <Text style={styles.textError}>La contraseña es necesaria</Text>}
             <TextInput
                 placeholder='Reingrese contraseña'
-                onChangeText={text => { 
-                    setValue('passwordConfirm', text) 
+                onChangeText={text => {
+                    setValue('passwordConfirm', text)
                     trigger('passwordConfirm');
                 }}
                 secureTextEntry={true}
@@ -82,7 +94,9 @@ const SignUpForm = () => {
                     onPress={handleSubmit(onSubmit)}
                     style={styles.btn}>
                     <View style={styles.btn}>
-                        <Text style={styles.textButton}>Registrar</Text>
+                        {isLoading ?
+                            <ActivityIndicator size="small" color={Colors.background} /> :
+                            <Text style={styles.textButton}>Registrar</Text>}
                     </View>
                 </TouchableHighlight>
             </View>
