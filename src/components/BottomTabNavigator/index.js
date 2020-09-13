@@ -21,7 +21,7 @@ const BottomTabNavigator = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          console.log(size);
+          
           if (route.name === 'Home') {
             iconName = focused
               ? <View >
