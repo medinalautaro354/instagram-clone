@@ -36,7 +36,7 @@ const Login = ({ navigation }) => {
                     setModalVisible(true);
                     setSendRequest(false);
                     setError({
-                        message: loginResponse.err.message,
+                        message: loginResponse.error.message,
                         anyError: true
                     })
                 } else {

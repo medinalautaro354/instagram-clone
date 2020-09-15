@@ -8,7 +8,8 @@ const initialState = {};
 const middleware = [thunk];
 const SagaMiddleware= createSagaMiddleware()
 
-const store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleware, SagaMiddleware)));
+const store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleware, SagaMiddleware),
+window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
 
 SagaMiddleware.run(mySaga)
 
