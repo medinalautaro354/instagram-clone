@@ -11,8 +11,7 @@ export function* getstories({ payload }){
         let headers = {
             AccessToken: yield getToken()
         }
-        
-        const result = yield call(apiCall, `${STORIES}/0/5`, payload, headers, 'GET');
+        const result = yield call(apiCall, `${STORIES}/${payload.from}/${payload.to}`, null, headers, 'GET');
         yield put({ type: GET_STORIES_COMPLETE, result });
     } catch (error) {
         yield put({ type: GET_STORIES_ERROR, error });

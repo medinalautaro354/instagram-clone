@@ -49,10 +49,11 @@ const Story = ({image, username, likes, comentary}) => {
                     />
                 </View>
                 <View style={styles.containerTextFooter}>
-                    <Text>{likes} Me gusta</Text>
-                </View>
-                <View>
-                <Text>{username} {comentary}</Text>
+                    <Text style={styles.text}>{likes} Me gusta</Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={styles.text}>{username}</Text>
+                        <Text> {comentary}</Text>
+                    </View>
                 </View>
             </View>
         </View>

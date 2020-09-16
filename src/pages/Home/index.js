@@ -4,10 +4,11 @@ import { getStories } from '../../redux/actions/story';
 import Story from '../../components/Story';
 import { isStoriesLoading, storiesResult } from '../../redux/selectors/index';
 
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useSelector, useDispatch } from 'react-redux';
-import { ActivityIndicator, RefreshControl, StyleSheet, View } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
+
 import colors from '../../utils/colors';
+import {offset, limit} from '../../utils/paginate';
 
 const wait = (timeout) => {
     return new Promise(resolve => {
@@ -16,24 +17,30 @@ const wait = (timeout) => {
 }
 
 const Home = () => {
-
     const dispatch = useDispatch();
     const isLoading = useSelector((state) => isStoriesLoading(state));
     const storyResult = useSelector((state) => storiesResult(state));
 
     const [stories, setStories] = useState([]);
     const [sendRequest, setSendRequest] = useState(false);
-    const [refreshing, setRefreshing] = useState(false);
+    const [paginate, setPaginate] = useState({
+        from: offset,
+        to: limit
+    });
+
+    const onRefreshEnd = () =>{
+        setPaginate({
+            to: paginate.to + limit
+        })
+
+        dispatch(getStories(paginate));
+    }
 
     const onRefresh = useCallback(() => {
-        setRefreshing(true);
-        loadStories();
-        setRefreshing(false);
-
+        dispatch(getStories(paginate));
     }, []);
 
     const loadStories = () => {
-        dispatch(getStories());
         setSendRequest(true);
 
         if (sendRequest) {
@@ -47,15 +54,18 @@ const Home = () => {
                     console.log(storyResult);
                 }
             }
-            setRefreshing(false);
             setSendRequest(false);
         }
 
     }
 
     useEffect(() => {
-        loadStories()
+        dispatch(getStories(paginate));
     }, [])
+
+    useEffect(() => {
+        loadStories();
+    }, [storyResult])
 
     const renderItem = ({ item }) => (
         <Story
@@ -68,21 +78,15 @@ const Home = () => {
 
     return (
 
-        <ScrollView
-            nestedScrollEnabled={true}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
-            {
-                isLoading ?
-                    <ActivityIndicator size="small" color={colors.buttonColor} /> :
-                    <FlatList
-                        data={stories}
-                        renderItem={renderItem}
-                        keyExtractor={item => item._id}
-                    />
-            }
-        </ScrollView>
+        <View style={{ width: '100%', height: '100%' }}>
+            <FlatList
+                data={stories}
+                renderItem={renderItem}
+                keyExtractor={item => item._id}
+                refreshing={isLoading ? isLoading : false}
+                onRefresh={onRefresh}
+            />
+        </View>
     );
 }
 
