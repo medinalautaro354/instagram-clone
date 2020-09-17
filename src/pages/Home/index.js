@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { StyleSheet, View, FlatList } from 'react-native';
 
 import colors from '../../utils/colors';
-import {offset, limit} from '../../utils/paginate';
+import { offset, limit } from '../../utils/paginate';
 
 const wait = (timeout) => {
     return new Promise(resolve => {
@@ -28,16 +28,44 @@ const Home = () => {
         to: limit
     });
 
-    const onRefreshEnd = () =>{
+    const onRefreshEnd = () => {
+        let dto = {};
+        if (!isLoading) {
+            if (stories.length >= paginate.to) {
+                nextPaginate();
+
+                dto = {
+                    from: offset,
+                    to: paginate.to + limit
+                }
+            }
+            dispatch(getStories(dto));
+        }
+    }
+
+    const nextPaginate = () => {
         setPaginate({
+            from: offset,
             to: paginate.to + limit
         })
+    }
 
-        dispatch(getStories(paginate));
+    const resetPaginate = () => {
+        setPaginate({
+            from: offset,
+            limit: limit
+        })
     }
 
     const onRefresh = useCallback(() => {
-        dispatch(getStories(paginate));
+        let dto = {
+            from: offset,
+            to: limit
+        }
+
+        resetPaginate();
+
+        dispatch(getStories(dto));
     }, []);
 
     const loadStories = () => {
@@ -47,7 +75,6 @@ const Home = () => {
 
             if (storyResult) {
                 if (storyResult.ok) {
-
                     setStories(storyResult.stories)
                 }
                 else {
@@ -56,7 +83,6 @@ const Home = () => {
             }
             setSendRequest(false);
         }
-
     }
 
     useEffect(() => {
@@ -65,7 +91,7 @@ const Home = () => {
 
     useEffect(() => {
         loadStories();
-    }, [storyResult])
+    }, [storyResult, stories])
 
     const renderItem = ({ item }) => (
         <Story
@@ -85,6 +111,8 @@ const Home = () => {
                 keyExtractor={item => item._id}
                 refreshing={isLoading ? isLoading : false}
                 onRefresh={onRefresh}
+                onEndReached={() => onRefreshEnd()}
+                onEndReachedThreshold={0.5}
             />
         </View>
     );
