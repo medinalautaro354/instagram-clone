@@ -21,4 +21,4 @@ bring the stories of your followers as well as your own stories ordered from mos
 
 
 ### Validations inputs form
-![wnyuE74VwW](https://user-images.githubusercontent.com/42869719/95362077-f18a5b80-08a3-11eb-9b9f-7a32af3493d9.gif)
+![yXKJ8DjJ4d](https://user-images.githubusercontent.com/42869719/95362402-69f11c80-08a4-11eb-9afa-dfc0ee995e4c.gif)
