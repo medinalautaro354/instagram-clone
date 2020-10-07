@@ -22,7 +22,6 @@ const Home = () => {
     const storyResult = useSelector((state) => storiesResult(state));
 
     const [stories, setStories] = useState([]);
-    const [sendRequest, setSendRequest] = useState(false);
     const [paginate, setPaginate] = useState({
         from: offset,
         to: limit
@@ -69,19 +68,13 @@ const Home = () => {
     }, []);
 
     const loadStories = () => {
-        setSendRequest(true);
-
-        if (sendRequest) {
-
-            if (storyResult) {
-                if (storyResult.ok) {
-                    setStories(storyResult.stories)
-                }
-                else {
-                    console.log(storyResult);
-                }
+        if (storyResult) {
+            if (storyResult.ok) {
+                setStories(storyResult.stories)
             }
-            setSendRequest(false);
+            else {
+                console.log(storyResult);
+            }
         }
     }
 

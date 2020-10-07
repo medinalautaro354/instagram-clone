@@ -8,3 +8,6 @@ export const signUpResult = state => get(state, 'signup.signUpResult');
 
 export const isStoriesLoading = state => get(state, 'getStories.isStoriesLoading');
 export const storiesResult = state => get(state, 'getStories.storiesResult');
+
+export const isAuthenticatedLoading = state => get(state, 'getAuthenticated.isAuthenticatedLoading');
+export const authenticatedResult = state => get(state, 'getAuthenticated.authenticatedResult');

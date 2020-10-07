@@ -8,9 +8,6 @@ import { STORIES } from '../../config/endpoints';
 
 export function* getstories({ payload }){
     try {
-        let headers = {
-            AccessToken: yield getToken()
-        }
         const result = yield call(apiCall, `${STORIES}/${payload.from}/${payload.to}`, null, headers, 'GET');
         yield put({ type: GET_STORIES_COMPLETE, result });
     } catch (error) {
