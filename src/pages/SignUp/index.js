@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
-import SignUpForm from '../../components/SignUpForm';
 import { useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { isSignUpLoading, signUpResult } from '../../redux/selectors/index';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+import SignUpForm from '../../components/SignUpForm';
 import ModalError from '../../components/ModalError';
 
 const SignUp = ({ navigation }) => {

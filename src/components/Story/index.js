@@ -62,7 +62,8 @@ const Story = ({image, username, likes, comentary}) => {
 
 const styles = StyleSheet.create({
     container:{
-        marginVertical: 10
+        marginVertical: 10,
+        maxWidth: '100%'
     },  
     containerHeader: {
         flexDirection: 'row',

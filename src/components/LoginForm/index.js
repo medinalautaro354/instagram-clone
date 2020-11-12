@@ -39,7 +39,7 @@ const LoginForm = ({ navigation, isLoading, setSendRequest }) => {
                 <TextInput
                     placeholder='Correo electrónico'
                     onChangeText={text => {
-                        setValue('email', text)
+                        setValue('email', text.toLowerCase())
                         trigger('email');
                     }}
                     autoCompleteType="email"

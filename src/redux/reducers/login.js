@@ -17,6 +17,7 @@ import {
       }
   
       case POST_LOGIN_COMPLETE: {
+        debugger
         return { ...state, isLoginLoading: false, loginResult: action.result.data };
       }
   

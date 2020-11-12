@@ -4,10 +4,21 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 export const getToken = async() =>(await AsyncStorage.getItem('token'));
 
-export const apiCall = (url, data, headers, method) =>
-  axios({
+export const apiCall = async (url, data, headers, method) => {
+
+  const config = {
     method,
     url: apiurl + url,
     data,
-    headers,
-  });
+    headers
+  }
+
+  let token = await getToken();
+
+  if(token){
+    config.headers = {
+      "AccessToken" : token
+    }
+  }
+  return axios.request(config)
+}
